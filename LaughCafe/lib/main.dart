@@ -2965,7 +2965,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chatrooms'),
+        title: Text('Cafe Lounge'),
         // centerTitle: true,
         backgroundColor: Colors.blueGrey[900],
       ),
