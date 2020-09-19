@@ -1,4 +1,4 @@
-#Sat Sep 19 09:47:29 PDT 2020
-base.0=/Users/ys/Desktop/Laugh-Cafe/LaughCafe/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Sat Sep 19 12:53:31 PDT 2020
+base.0=/Users/ys/AndroidStudioProjects/test1/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

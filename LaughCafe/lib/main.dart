@@ -2965,64 +2965,102 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  List<String>chatbubble = [
+
+  ];
+  final mycontroller = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chatrooms'),
+        title: Text('Anonymous Cafe Lounge'),
         // centerTitle: true,
         backgroundColor: Colors.blueGrey[900],
       ),
       body: Column(
         children: [
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            alignment: Alignment.centerLeft,
+            // width: double.infinity,
+            margin: EdgeInsets.fromLTRB(0, 0, 0,20),
             child: FlatButton(
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
 
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(20),
               onPressed: (){},
-              color: Colors.blueGrey[50],
-              child: Text( '💬 Dank Memes.......', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+              color: Colors.blueGrey[100],
+              child: Text( 'Wow, the silly memes are so funny!', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
             ),
           ),
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: FlatButton(
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+            alignment: Alignment.centerLeft,
 
-              padding: EdgeInsets.all(50),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+            child: FlatButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+
+              padding: EdgeInsets.all(20),
               onPressed: (){},
-              color: Colors.blueGrey[50],
-              child: Text( '💬 Trending Games...', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+              color: Colors.blueGrey[100],
+              child: Text( 'I agree 👌', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
             ),
           ),
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: FlatButton(
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
 
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(20),
               onPressed: (){},
-              color: Colors.blueGrey[50],
-              child: Text( '💬 Funny Shows.......', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+              color: Colors.blueGrey[100],
+              child: Text( 'Which categories do you guys like the most?', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
             ),
           ),
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            alignment: Alignment.centerRight,
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: FlatButton(
-              // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
 
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(20),
               onPressed: (){},
-              color: Colors.blueGrey[50],
-              child: Text( '💬 Mildly Infuriating...', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black)),
+              color: Colors.teal[400],
+              child: Text( 'The SUPER silly of course! 😂', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
             ),
           ),
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 230, 0, 0),
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      chatbubble.add(mycontroller.text);
+                      print(chatbubble[0]);
+                    });
+                  },
+                  icon: Icon(Icons.add_circle_outline),
+                ),
+              ),
+              Container(
+                width: 340,
+                alignment: Alignment.bottomCenter,
+                margin: EdgeInsets.fromLTRB(0, 230, 0, 0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Chat Here...',
+                    filled: true,
+                    fillColor: Colors.blueGrey[100],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
 
+                  ),
+                  controller: mycontroller,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
 
