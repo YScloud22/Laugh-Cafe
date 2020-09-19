@@ -2944,7 +2944,7 @@ class _CommentPageState extends State<CommentPage> {
                   children: [
                     Container(
                       child: Column(
-                        children: userComments.map((comment) => commentCard(comment)).toList(),
+                        children: userComments.map((comment) => commentCard(comment)).toList(), //chatbubble.map((mess) => messageForm(mess)).toList();
                       ),
                     ),
                   ],
@@ -2959,84 +2959,115 @@ class _CommentPageState extends State<CommentPage> {
 }
 
 //chat page
+
+
 class ChatPage extends StatefulWidget {
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<String>chatbubble = [
-
-  ];
+  List<String> chatbubble = [];
   final mycontroller = TextEditingController();
-  Widget build(BuildContext context) {
+  Widget messageForm(mess){
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Anonymous Cafe Lounge'),
-        // centerTitle: true,
-        backgroundColor: Colors.blueGrey[900],
-      ),
       body: Column(
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            // width: double.infinity,
-            margin: EdgeInsets.fromLTRB(0, 0, 0,20),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-
-              padding: EdgeInsets.all(20),
-              onPressed: (){},
-              color: Colors.blueGrey[100],
-              child: Text( 'Wow, the silly memes are so funny!', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-
-              padding: EdgeInsets.all(20),
-              onPressed: (){},
-              color: Colors.blueGrey[100],
-              child: Text( 'I agree 👌', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
-            ),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-
-              padding: EdgeInsets.all(20),
-              onPressed: (){},
-              color: Colors.blueGrey[100],
-              child: Text( 'Which categories do you guys like the most?', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
-            ),
-          ),
           Container(
             alignment: Alignment.centerRight,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
             child: FlatButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-
               padding: EdgeInsets.all(20),
               onPressed: (){},
               color: Colors.teal[400],
-              child: Text( 'The SUPER silly of course! 😂', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+              child: Text( mess, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Anonymous Cafe Lounge  [5/16]  👤'),
+        //centerTitle: true,
+        backgroundColor: Colors.blueGrey[900],
+      ),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      // width: double.infinity,
+                      margin: EdgeInsets.fromLTRB(0, 20, 0,20),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        padding: EdgeInsets.all(20),
+                        onPressed: (){},
+                        color: Colors.blueGrey[100],
+                        child: Text( 'Wow, the silly memes are so funny!', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+
+                        padding: EdgeInsets.all(20),
+                        onPressed: (){},
+                        color: Colors.blueGrey[100],
+                        child: Text( 'I agree 👌', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+
+                        padding: EdgeInsets.all(20),
+                        onPressed: (){},
+                        color: Colors.blueGrey[100],
+                        child: Text( 'Which categories do you guys like the most?', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+
+                        padding: EdgeInsets.all(20),
+                        onPressed: (){},
+                        color: Colors.teal[400],
+                        child: Text( 'The SUPER silly of course! 😂', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blueGrey[800])),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Row(
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 230, 0, 0),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 540, 0, 0),
                 child: IconButton(
                   onPressed: () {
                     setState(() {
                       chatbubble.add(mycontroller.text);
                       print(chatbubble[0]);
+                      chatbubble.map((mess) => messageForm(mess)).toList();
                     });
                   },
                   icon: Icon(Icons.add_circle_outline),
@@ -3045,25 +3076,23 @@ class _ChatPageState extends State<ChatPage> {
               Container(
                 width: 340,
                 alignment: Alignment.bottomCenter,
-                margin: EdgeInsets.fromLTRB(0, 230, 0, 0),
+                margin: EdgeInsets.fromLTRB(0, 470, 0, 0),
                 child: TextField(
+                  controller: mycontroller,
                   decoration: InputDecoration(
                     hintText: 'Chat Here...',
                     filled: true,
                     fillColor: Colors.blueGrey[100],
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
+                        borderRadius: BorderRadius.all(Radius.circular(10))
                     ),
-
                   ),
-                  controller: mycontroller,
                 ),
               ),
             ],
           ),
         ],
       ),
-
     );
   }
 }
@@ -3264,6 +3293,7 @@ class _DisplayMeme1State extends State<DisplayMeme1> {
 }
 
 
+
 class CreatePost extends StatefulWidget {
   @override
   _CreatePostState createState() => _CreatePostState();
@@ -3273,13 +3303,13 @@ class _CreatePostState extends State<CreatePost> {
   double xPos = 0;
   double yPos = 0;
   double boxStuff = 0;
-  double containerWidth = 0;
+  double containerWidth;
   String textValue ='';
   GlobalKey _keyText = GlobalKey();
   final myController = TextEditingController();
-  _getSizes() {
+  getSizes() {
     final RenderBox renderBoxRed = _keyText.currentContext.findRenderObject();
-    final containerWidth = renderBoxRed.size.width;
+    containerWidth = renderBoxRed.size.width;
     print("WIDTH of Red: $containerWidth");
     boxStuff = 400 - containerWidth;
   }
@@ -3353,29 +3383,37 @@ class _CreatePostState extends State<CreatePost> {
                         disabledColor: Colors.blueGrey[900],
                       ),
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center,
+                    Row(mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        GestureDetector(
+                            onTap: (){
+                              textValue = myController.text;
+                              setState(() {
+                                textValue = myController.text;
+                                getSizes();
+
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+                              child: Icon(Icons.add_circle_outline, color: Colors.blueGrey[900], size: 30,),
+                            )),
                         Container(
                           margin: EdgeInsets.only(top: 30),
                           height: 50,
-                          width: MediaQuery.of(context).size.width - 20,
-                          child: TextField(
-                            controller: myController,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 15),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20))
+                          width: MediaQuery.of(context).size.width - 80,
+                          child: Builder(
+                            builder: (context) => TextField(
+                              controller: myController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left:10, top: 15),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(20))
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: 'Text Value #1',
                               ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: 'Text Value #1',
-                              prefixIcon: GestureDetector(onTap: (){
-                                setState(() {
-                                  _getSizes();
-                                  textValue = myController.text;
-                                  print(textValue);
-                                });
-                              },child: Icon(Icons.add_circle_outline, color: Colors.blueGrey[900], size: 30,),)
                             ),
                           ),
                         ),
@@ -3400,20 +3438,20 @@ class _CreatePostState extends State<CreatePost> {
                   else if(xPos < 5){
                     xPos = 5;
                   }
-                  else if(yPos < 0){
+                  if(yPos < 0){
                     yPos = 0;
                   }
-                  else if(yPos > 300){
-                    yPos = 300;
+                  else if(yPos > 290){
+                    yPos = 290;
                   }
                 });
               },
               child: Container(
                 key: _keyText,
                 margin: EdgeInsets.only(top: 100),
-                width: containerWidth,
+
                 height: 50,
-                color: Colors.yellow,
+                color: Colors.transparent,
                 child: Text('${textValue}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color:Colors.black),),
               ),
             ),
@@ -3423,6 +3461,8 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 }
+
+
 
 
 
