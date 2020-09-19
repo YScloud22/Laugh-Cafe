@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 // import 'package:share/share.dart';
 
 void main() {
@@ -3305,6 +3306,15 @@ class _CreatePostState extends State<CreatePost> {
   double boxStuff = 0;
   double containerWidth;
   String textValue ='';
+  File _image;
+  final picker = ImagePicker();
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
   GlobalKey _keyText = GlobalKey();
   final myController = TextEditingController();
   getSizes() {
@@ -3363,6 +3373,7 @@ class _CreatePostState extends State<CreatePost> {
                     Container(
                       height: 350,
                       width: MediaQuery.of(context).size.width,
+                      child: _image == null ? Text('') : Image.file(_image, fit: BoxFit.fill,),
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
@@ -3373,7 +3384,7 @@ class _CreatePostState extends State<CreatePost> {
                       height: 50,
                       child: FlatButton(
                         onPressed: (){
-
+                          getImage();
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
