@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+
 // import 'package:share/share.dart';
 
 void main() {
@@ -2666,9 +2668,10 @@ class NavigationPage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 90, 0, 0),
                     child: FlatButton(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-
                         padding: EdgeInsets.all(10),
-                        onPressed: (){},
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost()));
+                        },
                         color: Colors.blueGrey[50],
                         child: Icon(
                           Icons.add,
@@ -2965,7 +2968,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cafe Lounge'),
+        title: Text('Chatrooms'),
         // centerTitle: true,
         backgroundColor: Colors.blueGrey[900],
       ),
@@ -3026,7 +3029,6 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 }
-
 
 
 
@@ -3218,6 +3220,167 @@ class _DisplayMeme1State extends State<DisplayMeme1> {
             image: NetworkImage('https://i.pinimg.com/originals/dd/43/98/dd4398d986933b277575dea5c314a3b2.jpg'),
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class CreatePost extends StatefulWidget {
+  @override
+  _CreatePostState createState() => _CreatePostState();
+}
+
+class _CreatePostState extends State<CreatePost> {
+  double xPos = 0;
+  double yPos = 0;
+  double boxStuff = 0;
+  double containerWidth = 0;
+  String textValue ='';
+  GlobalKey _keyText = GlobalKey();
+  final myController = TextEditingController();
+  _getSizes() {
+    final RenderBox renderBoxRed = _keyText.currentContext.findRenderObject();
+    final containerWidth = renderBoxRed.size.width;
+    print("WIDTH of Red: $containerWidth");
+    boxStuff = 400 - containerWidth;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                    colors: [
+                      Colors.grey,
+                      Colors.blueGrey[900],
+                    ]
+                )
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationPage()));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 70,
+                        color: Colors.blueGrey[900],
+                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: Text('Create a Post', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                              child: Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 30,),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 350,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: 50,
+                      child: FlatButton(
+                        onPressed: (){
+
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Text('Upload Photo', style: TextStyle(color: Colors.white),),
+                        color: Colors.blueGrey[900],
+                        disabledColor: Colors.blueGrey[900],
+                      ),
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          height: 50,
+                          width: MediaQuery.of(context).size.width - 20,
+                          child: TextField(
+                            controller: myController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(top: 15),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20))
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Text Value #1',
+                              prefixIcon: GestureDetector(onTap: (){
+                                setState(() {
+                                  _getSizes();
+                                  textValue = myController.text;
+                                  print(textValue);
+                                });
+                              },child: Icon(Icons.add_circle_outline, color: Colors.blueGrey[900], size: 30,),)
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: yPos,
+            left: xPos,
+            child: GestureDetector(
+              onPanUpdate: (tapInfo){
+                setState(() {
+                  xPos += tapInfo.delta.dx;
+                  yPos += tapInfo.delta.dy;
+                  if(xPos > (boxStuff)){
+                    xPos = boxStuff;
+                  }
+                  else if(xPos < 5){
+                    xPos = 5;
+                  }
+                  else if(yPos < 0){
+                    yPos = 0;
+                  }
+                  else if(yPos > 300){
+                    yPos = 300;
+                  }
+                });
+              },
+              child: Container(
+                key: _keyText,
+                margin: EdgeInsets.only(top: 100),
+                width: containerWidth,
+                height: 50,
+                color: Colors.yellow,
+                child: Text('${textValue}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40, color:Colors.black),),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
