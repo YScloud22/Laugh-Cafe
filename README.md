@@ -18,7 +18,7 @@ The revenue model for this app are through advertisements based on the influx of
 and through a subcription model of $5/Month to allow users to have an ad-free experience on the app.
 
 ### TechTools
-- Used Flutter with Android Studio for cross platform development.
+- Used Flutter on Android Studio for cross platform development.
 - Used Auth0 to quickly and securely authenticate users to log in.
 - Used Xcode Simulator and Android Emulator to test code respectively on IOS and Android.
 
