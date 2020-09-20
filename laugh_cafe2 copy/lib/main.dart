@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 // import 'package:share/share.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /// -----------------------------------
 ///          Auth0 External Packages
@@ -204,8 +205,8 @@ class _MyAppState extends State<MyApp> {
               ? const CircularProgressIndicator()
               : isLoggedIn
               ?
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage())).then(FlutterError.onError)
-          /*         Profile(logoutAction, name, picture)*/
+          Future.delayed(Duration.zero, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage())).then(FlutterError.onError);})          /*         Profile(logoutAction, name, picture)*/
               : Login(loginAction, errorMessage),
         ),
       ),
@@ -259,7 +260,7 @@ class _MyAppState extends State<MyApp> {
           AUTH0_REDIRECT_URI,
           issuer: 'https://$AUTH0_DOMAIN',
           scopes: <String>['openid', 'profile', 'offline_access'],
-          // promptValues: ['login']
+           promptValues: ['login']
         ),
       );
 
