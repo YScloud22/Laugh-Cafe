@@ -607,6 +607,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool iconColor = flase;
   List<String> memeImages = [
   'https://i.pinimg.com/originals/f7/ae/e8/f7aee8753832af613b63e51d5f07011a.jpg',
   'https://i.pinimg.com/736x/ce/c0/74/cec074ab85ddb1b716c8ea9ed2a79d4f.jpg',
@@ -691,12 +692,15 @@ class _MainPageState extends State<MainPage> {
                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                    children: [
                      GestureDetector(
-                       onTap: (){},
+                       onTap: (){
+                         setState(() {
+                           iconColor = true;
+                         });
+                       },
                        child: Container(
                          margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
                          color: Colors.blueGrey[900],
-                         child: Icon(Icons.favorite, color: Colors.white, size: 45,
-                         ),
+                         child: iconColor ? Icon(Icons.favorite, color: Colors.pink, size: 45,) : Icon(Icons.favorite, color: Colors.pink, size: 45,),
                        ),
                      ),
                      GestureDetector(
