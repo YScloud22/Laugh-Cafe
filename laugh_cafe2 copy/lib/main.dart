@@ -700,7 +700,7 @@ class _MainPageState extends State<MainPage> {
                        child: Container(
                          margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
                          color: Colors.blueGrey[900],
-                         child: iconColor ? Icon(Icons.favorite, color: Colors.pink, size: 45,) : Icon(Icons.favorite, color: Colors.pink, size: 45,),
+                         child: iconColor ? Icon(Icons.favorite, color: Colors.pink, size: 45,) : Icon(Icons.favorite, color: Colors.white, size: 45,),
                        ),
                      ),
                      GestureDetector(
