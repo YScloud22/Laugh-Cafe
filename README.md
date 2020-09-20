@@ -1,4 +1,4 @@
-# LaughCafe  
+# LaughCafe  ☕
 
 A mobile app developed for both Android and IOS with Flutter to provide a collection of the best *memes* daily. 
 For the age of everyone, there is unlimited levels of thrill to be found on any catetories of *memes* in Explore! 
