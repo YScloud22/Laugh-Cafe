@@ -5,6 +5,165 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 // import 'package:share/share.dart';
 
+/// -----------------------------------
+///          Auth0 External Packages
+/// -----------------------------------
+
+import 'package:flutter/material.dart';
+
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final FlutterAppAuth appAuth = FlutterAppAuth();
+final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
+/// -----------------------------------
+///           Auth0 Variables
+/// -----------------------------------
+
+const AUTH0_DOMAIN = 'dev-kl4e7wj9.us.auth0.com';
+const AUTH0_CLIENT_ID = 'K7UDQTpnpTIbN4uiMzPBeA2Z5n8hfCqu';
+
+const AUTH0_REDIRECT_URI = 'com.auth0.flutterdemo://login-callback';
+const AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
+
+/// -----------------------------------
+///           Profile Widget
+/// -----------------------------------
+
+class Profile extends StatelessWidget {
+  final logoutAction;
+  final String name;
+  final String picture;
+
+  Profile(this.logoutAction, this.name, this.picture);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          width: 150,
+          height: 150,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.blue, width: 4.0),
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(picture ?? ''),
+            ),
+          ),
+        ),
+        SizedBox(height: 24.0),
+        Text('Name: $name'),
+        SizedBox(height: 48.0),
+        RaisedButton(
+          onPressed: () {
+            logoutAction();
+          },
+          child: Text('Logout'),
+        ),
+      ],
+    );
+  }
+}
+
+/// -----------------------------------
+///            Login Widget
+/// -----------------------------------
+/// Login Created below with MyApp
+class Login extends StatelessWidget {
+  final loginAction;
+  final String loginError;
+
+  const Login(this.loginAction, this.loginError);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                      colors: [
+                        Colors.grey,
+                        Colors.blueGrey[900],
+                      ]
+                  )
+              ),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 220, 0, 0),
+                  child: Icon(Icons.local_cafe, color: Colors.white, size: 200,),
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+                  child: Text('Laugh Cafe',
+                    style: TextStyle(color: Colors.white,
+                      fontSize: 50, fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+/*                Expanded(
+                child:*/ Container(
+                  margin: EdgeInsets.fromLTRB(0, 500, 0, 0),
+                  width: 170,
+                  height: 50,
+                  child: FlatButton(
+                    onPressed: (){
+                      loginAction();
+                    },
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    child: Text('Log In', style: TextStyle(color: Colors.blueGrey[900], fontSize: 20),),
+                  ),
+                ),
+/*                ),*/
+                Text(loginError ?? ''),
+/*                Expanded(
+                child: */Container(
+                  margin: EdgeInsets.fromLTRB(0, 500, 0, 0),
+                  width: 170,
+                  height: 50,
+                  child: FlatButton(
+                    onPressed: (){
+                      loginAction();
+                    },
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    child: Text('Sign Up', style: TextStyle(color: Colors.blueGrey[900], fontSize: 20),),
+                  ),
+                ),
+/*                ),*/
+                Text(loginError ?? ''),
+              ],
+            ),
+          ]),
+    );
+  }
+}
+
+/// -----------------------------------
+///                 App
+/// -----------------------------------
+
 void main() {
   runApp(MaterialApp(home: MyApp(),));
 }
@@ -15,79 +174,170 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  bool isBusy = false;
+  bool isLoggedIn = false;
+  String errorMessage;
+  String name;
+  String picture;
+  String page;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.bottomRight,
-                    end: Alignment.topLeft,
-                    colors: [
-                      Colors.grey,
-                      Colors.blueGrey[900],
-                    ]
-                )
-            ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 220, 0, 0),
-                child: Icon(Icons.local_cafe, color: Colors.white, size: 200,),
-              ),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                child: Text('Laugh Cafe',
-                  style: TextStyle(color: Colors.white,
-                      fontSize: 50, fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 500, 0, 0),
-                width: 170,
-                height: 50,
-                child: FlatButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LogInPage()));
-                  },
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Text('Log In', style: TextStyle(color: Colors.blueGrey[900], fontSize: 20),),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 500, 0, 0),
-                width: 170,
-                height: 50,
-                child: FlatButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
-                  },
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Text('Sign Up', style: TextStyle(color: Colors.blueGrey[900], fontSize: 20),),
-                ),
-              )
-            ],
-          )
-        ],
+    return MaterialApp(
+/*      initialRoute: '/',
+      routes: {
+        '/': (context) => MyApp(),
+        '/second': (context) => MainPage(),
+      },*/
+      title: 'Laugh Cafe Authentication',
+      home: Scaffold(
+/*        appBar: AppBar(
+          backgroundColor: Colors.blueGrey[900],
+*//*          title: const Text('LCAuth'),*//*
+        ),*/
+        body: Center(
+
+          /// Navigator setState() cannot be used on a currently building widget so either use async/await or .then, etc.
+
+          child: isBusy
+              ? const CircularProgressIndicator()
+              : isLoggedIn
+              ?
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage())).then(FlutterError.onError)
+          /*         Profile(logoutAction, name, picture)*/
+              : Login(loginAction, errorMessage),
+        ),
       ),
     );
   }
-}
 
+  /// Test ErrorHandler
+
+/*  void main() {
+    FlutterError.onError = (FlutterErrorDetails details) async {
+      FlutterError.dumpErrorToConsole(details);
+      if (kReleaseMode)
+        await Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+    };
+    runApp(MyApp());
+ }*/
+
+  Map<String, Object> parseIdToken(String idToken) {
+    final List<String> parts = idToken.split('.');
+    assert(parts.length == 3);
+
+    return jsonDecode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
+  }
+
+  Future<Map<String, Object>> getUserDetails(String accessToken) async {
+    const String url = 'https://$AUTH0_DOMAIN/userinfo';
+    final http.Response response = await http.get(
+      url,
+      headers: <String, String>{'Authorization': 'Bearer $accessToken'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to get user details');
+    }
+  }
+
+  Future<void> loginAction() async {
+    setState(() {
+      isBusy = true;
+      errorMessage = '';
+    });
+
+    try {
+      final AuthorizationTokenResponse result =
+      await appAuth.authorizeAndExchangeCode(
+        AuthorizationTokenRequest(
+          AUTH0_CLIENT_ID,
+          AUTH0_REDIRECT_URI,
+          issuer: 'https://$AUTH0_DOMAIN',
+          scopes: <String>['openid', 'profile', 'offline_access'],
+          // promptValues: ['login']
+        ),
+      );
+
+      final Map<String, Object> idToken = parseIdToken(result.idToken);
+      final Map<String, Object> profile =
+      await getUserDetails(result.accessToken);
+
+      await secureStorage.write(
+          key: 'refresh_token', value: result.refreshToken);
+
+      setState(() {
+        isBusy = false;
+        isLoggedIn = true;
+        name = idToken['name'];
+        picture = profile['picture'];
+      });
+    } on Exception catch (e, s) {
+      debugPrint('login error: $e - stack: $s');
+
+      setState(() {
+        isBusy = false;
+        isLoggedIn = false;
+        errorMessage = e.toString();
+      });
+    }
+  }
+
+  Future<void> logoutAction() async {
+    await secureStorage.delete(key: 'refresh_token');
+    setState(() {
+      isLoggedIn = false;
+      isBusy = false;
+    });
+  }
+
+  @override
+  void initState() {
+    initAction();
+    super.initState();
+  }
+
+  Future<void> initAction() async {
+    final String storedRefreshToken =
+    await secureStorage.read(key: 'refresh_token');
+    if (storedRefreshToken == null) return;
+
+    setState(() {
+      isBusy = true;
+    });
+
+    try {
+      final TokenResponse response = await appAuth.token(TokenRequest(
+        AUTH0_CLIENT_ID,
+        AUTH0_REDIRECT_URI,
+        issuer: AUTH0_ISSUER,
+        refreshToken: storedRefreshToken,
+      ));
+
+      final Map<String, Object> idToken = parseIdToken(response.idToken);
+      final Map<String, Object> profile =
+      await getUserDetails(response.accessToken);
+
+      await secureStorage.write(
+          key: 'refresh_token', value: response.refreshToken);
+
+      setState(() {
+        isBusy = false;
+        isLoggedIn = true;
+        name = idToken['name'];
+        picture = profile['picture'];
+      });
+    } on Exception catch (e, s) {
+      debugPrint('error on refresh token: $e - stack: $s');
+      await logoutAction();
+    }
+  }
+}
+/*
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -346,6 +596,7 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 }
+*/
 
 
 
