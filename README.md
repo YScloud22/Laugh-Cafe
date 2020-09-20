@@ -1,4 +1,4 @@
-# LaughCafe  ![alt text](http://url/to/https://media0.giphy.com/media/26ybxiiIxi4NQfiJG/giphy.gif)
+# LaughCafe  ![alt text](http://url/to/https://i1.wp.com/www.society19.com/wp-content/uploads/2020/02/Kermit-Tea-Meme-Drawing-1.jpg?fit=1024%2C768&ssl=1)
 
 A mobile app developed for both Android and IOS with Flutter to provide a collection of the best *memes* daily. 
 For the age of everyone, there is unlimited levels of thrill to be found on any catetories of *memes* in Explore! 
